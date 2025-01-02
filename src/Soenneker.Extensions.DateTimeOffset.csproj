@@ -14,7 +14,7 @@
         <AssemblyName>Soenneker.Extensions.DateTimeOffset</AssemblyName>
         <PackageId>Soenneker.Extensions.DateTimeOffset</PackageId>
         <PackageTags>extensions datetimeoffset datetime timezone date time zone offset conversion datetimeoffsetextension extension csharp dotnet c# .net</PackageTags>
-        <Copyright>Copyright © 2024 Jake Soenneker</Copyright>
+        <Copyright>Copyright © 2024-2025 Jake Soenneker</Copyright>
         <Authors>Jake Soenneker</Authors>
         <Company>https://soenneker.com</Company>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
