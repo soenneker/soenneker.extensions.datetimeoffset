@@ -70,7 +70,7 @@ public class DateTimeOffsetExtensionTests : UnitTest
     public void AddBusinessDays_skips_weekends_forward()
     {
         var friday = new System.DateTimeOffset(2025, 07, 04, 12, 00, 00, TimeSpan.Zero); // Friday
-        var result = friday.AddBusinessDays(1);
+        System.DateTimeOffset result = friday.AddBusinessDays(1);
 
         result.Should().Be(friday.AddDays(3)); // Monday
     }
@@ -79,7 +79,7 @@ public class DateTimeOffsetExtensionTests : UnitTest
     public void AddBusinessDays_skips_weekends_backward()
     {
         var monday = new System.DateTimeOffset(2025, 07, 07, 12, 00, 00, TimeSpan.Zero); // Monday
-        var result = monday.AddBusinessDays(-1);
+        System.DateTimeOffset result = monday.AddBusinessDays(-1);
 
         result.Should().Be(monday.AddDays(-3)); // Previous Friday
     }
@@ -89,9 +89,9 @@ public class DateTimeOffsetExtensionTests : UnitTest
     {
         // 23:00 UTC Friday => 18:00 CDT Friday
         var fridayUtc = new System.DateTimeOffset(2025, 07, 04, 23, 00, 00, TimeSpan.Zero);
-        var zone = GetCentralTimeZone();
+        TimeZoneInfo zone = GetCentralTimeZone();
 
-        var mondayUtc = fridayUtc.AddBusinessDays(1, zone);
+        System.DateTimeOffset mondayUtc = fridayUtc.AddBusinessDays(1, zone);
 
         mondayUtc.UtcDateTime.DayOfWeek.Should().Be(DayOfWeek.Monday);
     }
@@ -99,7 +99,7 @@ public class DateTimeOffsetExtensionTests : UnitTest
     [Fact]
     public void AddBusinessDays_zero_returns_same_value()
     {
-        var now = System.DateTimeOffset.UtcNow;
+        System.DateTimeOffset now = System.DateTimeOffset.UtcNow;
         now.AddBusinessDays(0).Should().Be(now);
     }
 

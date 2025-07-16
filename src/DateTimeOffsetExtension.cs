@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Globalization;
+using Soenneker.Extensions.CultureInfos;
 
 namespace Soenneker.Extensions.DateTimeOffset;
 
@@ -24,11 +27,14 @@ public static class DateTimeOffsetExtension
     /// If <paramref name="zone"/> is <see langword="null"/>, the date’s own offset is used.
     /// </summary>
     [Pure]
-    public static bool IsBusinessDay(this System.DateTimeOffset dateTimeOffset, TimeZoneInfo? zone = null)
+    public static bool IsBusinessDay(this System.DateTimeOffset dateTimeOffset, TimeZoneInfo? zone = null, CultureInfo? culture = null)
     {
         System.DateTimeOffset local = zone is null ? dateTimeOffset : TimeZoneInfo.ConvertTime(dateTimeOffset, zone);
         DayOfWeek d = local.DayOfWeek;
-        return d != DayOfWeek.Saturday && d != DayOfWeek.Sunday;
+
+        IReadOnlySet<DayOfWeek> weekendDays = (culture ?? CultureInfo.CurrentCulture).GetWeekendDays();
+
+        return !weekendDays.Contains(d);
     }
 
     /// <summary>
@@ -40,8 +46,9 @@ public static class DateTimeOffsetExtension
     /// Time-zone whose calendar should be used when deciding if a day is a weekend.
     /// If <see langword="null"/>, the date’s own offset is used.
     /// </param>
+    /// <param name="culture"></param>
     [Pure]
-    public static System.DateTimeOffset AddBusinessDays(this System.DateTimeOffset dateTimeOffset, int businessDays, TimeZoneInfo? zone = null)
+    public static System.DateTimeOffset AddBusinessDays(this System.DateTimeOffset dateTimeOffset, int businessDays, TimeZoneInfo? zone = null, CultureInfo? culture = null)
     {
         if (businessDays == 0)
             return dateTimeOffset;
@@ -54,7 +61,7 @@ public static class DateTimeOffsetExtension
         {
             current = current.AddDays(direction);
 
-            if (current.IsBusinessDay(zone))
+            if (current.IsBusinessDay(zone, culture))
                 remaining--;
         }
 
