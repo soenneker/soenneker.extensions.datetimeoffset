@@ -41,6 +41,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Soenneker.Extensions.CultureInfos" Version="4.0.18" />
+      <PackageReference Include="Soenneker.Extensions.CultureInfos" Version="4.0.19" />
     </ItemGroup>
 </Project>
